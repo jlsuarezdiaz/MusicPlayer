@@ -7,8 +7,10 @@ package Model;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
@@ -442,8 +444,9 @@ public class MusicPlayer {
         // ---------- IO-METHODS ---------- //
     
     public void write(String path) throws IOException{
-        FileWriter fw = null;
-        fw = new FileWriter(path);
+        //FileWriter fw = null;
+        //fw = new FileWriter(path);
+        OutputStreamWriter fw = new OutputStreamWriter(new FileOutputStream(path), "UTF-8");
         write(fw);
         if(fw != null) fw.close();
     }
@@ -454,10 +457,15 @@ public class MusicPlayer {
         }
     }
     
+    public void write(OutputStreamWriter fw) throws IOException{
+        for(Song s : songList){
+            s.write(fw);
+        }
+    }
     public void read(String path) throws FileNotFoundException, NoSuchElementException, ParseException{
         Scanner scan = null;
         File f = new File(path);
-        scan = new Scanner(f);
+        scan = new Scanner(f,"UTF-8");
         scan.useDelimiter(Song.getIO_LIM());
         read(scan);
         if(scan != null) scan.close();

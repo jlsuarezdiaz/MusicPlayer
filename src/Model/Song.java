@@ -8,8 +8,10 @@ package Model;
 import java.beans.EventHandler;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStreamWriter;
 import static java.lang.Thread.sleep;
 import java.nio.file.Paths;
 import java.text.ParseException;
@@ -528,13 +530,20 @@ public class Song {
     // ---------- IO-METHODS ---------- //
     
     public void write(String path) throws IOException{
-        FileWriter fw = null;
-        fw = new FileWriter(path);
+        //FileWriter fw = null;
+        //fw = new FileWriter(path);
+        OutputStreamWriter fw = new OutputStreamWriter(new FileOutputStream(path), "UTF-8");
         write(fw);
         if(fw != null) fw.close();
     }
     
     public void write(FileWriter fw) throws IOException{
+        fw.write(this.path + IO_LIM + this.title + IO_LIM + this.author + IO_LIM +
+                this.description + IO_LIM + this.album + IO_LIM + this.disc + IO_LIM +
+                this.number + IO_LIM + Integer.toString(this.rate) + IO_LIM + Double.toString(length)+ IO_LIM);
+    }
+    
+    public void write(OutputStreamWriter fw) throws IOException{
         fw.write(this.path + IO_LIM + this.title + IO_LIM + this.author + IO_LIM +
                 this.description + IO_LIM + this.album + IO_LIM + this.disc + IO_LIM +
                 this.number + IO_LIM + Integer.toString(this.rate) + IO_LIM + Double.toString(length)+ IO_LIM);
@@ -547,7 +556,7 @@ public class Song {
     public void read(String path) throws FileNotFoundException, NoSuchElementException, ParseException{
         Scanner scan = null;
         File f = new File(path);
-        scan = new Scanner(f);
+        scan = new Scanner(f,"UTF-8");
         scan.useDelimiter(IO_LIM);
         read(scan);
         if(scan != null) scan.close();
