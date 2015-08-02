@@ -21,6 +21,7 @@ public class test3 {
      * @param args 
      */
    public static void main(String[] args){
+       /*
         MusicPlayer mp = new MusicPlayer();
         Song s1 = new Song("leader.mp3");
         Song s2 = new Song("pruebam4a.m4a");
@@ -37,5 +38,6 @@ public class test3 {
         MusicPlayerView mpv = new MusicPlayerView();
         mpv.setMusicPlayer(mp);
         mpv.showView();
+               */
    } 
 }
