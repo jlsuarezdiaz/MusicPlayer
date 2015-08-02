@@ -1,0 +1,12 @@
+Load version 1 : 4' 18''
+
+set
+play
+Song(path)
+next
+back
+chooseSong
+
+Add folder version 1 : 4' 11'
+
+Load folder version 2 : 8''
