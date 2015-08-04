@@ -12,6 +12,9 @@ import java.sql.Time;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
+import javafx.scene.media.MediaException;
+import javafx.scene.media.MediaPlayer.Status;
+import javax.swing.JOptionPane;
 
 /**
  * Class SongView.
@@ -32,12 +35,12 @@ public class SongView extends javax.swing.JPanel {
     /**
      * Soft selction.
      */
-    boolean softSelected;
+    private boolean softSelected;
     
     /**
      * Hard selection.
      */
-    boolean hardSelected;
+    private boolean hardSelected;
 
     /**
      * Date format for songs time.
@@ -120,8 +123,15 @@ public class SongView extends javax.swing.JPanel {
     public void setSong(Song s){
         this.songModel = s;
         titleLabel.setText(songModel.getTitle());
+        
         playMode = PlayingViewState.STOPPED;
+        setStoppedView();
+        
         ratingPanel.setRating(songModel.getRate());
+        
+        if(songModel.getError()) setError();
+        else deleteError();
+                
         songModel.setOnEndOfMedia(new Runnable() {
             @Override
             public void run() {
@@ -133,6 +143,8 @@ public class SongView extends javax.swing.JPanel {
             @Override
             public void run() {
                 setPlayingView();
+                if(songModel.getError()) setError();
+                else deleteError();
             }
         });
         songModel.setOnPaused(new Runnable() {
@@ -147,7 +159,23 @@ public class SongView extends javax.swing.JPanel {
                 setStoppedView();
             }
         });
-        setStoppedView();
+        
+        Status st = s.getStatus();
+        if(st != null) switch(st){
+            case PLAYING:
+                playMode = PlayingViewState.PLAYING;
+                setPlayingView();
+                break;
+            case PAUSED:
+                playMode = PlayingViewState.PAUSED;
+                setPausedView();
+                break;
+            default:
+                playMode = PlayingViewState.STOPPED;
+                setStoppedView();
+                break;
+        }
+        
         repaint();
         ratingPanel.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
@@ -237,11 +265,19 @@ public class SongView extends javax.swing.JPanel {
         setMaximumSize(new java.awt.Dimension(715, 44));
         setMinimumSize(new java.awt.Dimension(715, 44));
         setPreferredSize(new java.awt.Dimension(715, 44));
+        addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                formMouseReleased(evt);
+            }
+        });
 
         titleLabel.setText("Por qué no compila Superemix");
         titleLabel.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseEntered(java.awt.event.MouseEvent evt) {
                 titleLabelMouseEntered(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                titleLabelMouseReleased(evt);
             }
         });
 
@@ -330,6 +366,20 @@ public class SongView extends javax.swing.JPanel {
         songModel.backward();
     }//GEN-LAST:event_BtBackwardActionPerformed
 
+    public void setError(){
+        this.titleLabel.setText("[ERROR!!]  " + titleLabel.getText());
+        this.titleLabel.setForeground(Color.RED);
+        this.repaint();
+        this.revalidate();
+    }
+    
+    public void deleteError(){
+        this.titleLabel.setText(songModel.getTitle());
+        this.titleLabel.setForeground(Color.BLACK);
+        this.repaint();
+        this.revalidate();
+    }
+    
     private void BtPlayPauseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtPlayPauseActionPerformed
         if(playMode == PlayingViewState.PLAYING){
             setPausedView();
@@ -337,7 +387,16 @@ public class SongView extends javax.swing.JPanel {
         }
         else{
             setPlayingView();
-            songModel.play(); 
+            try{
+                songModel.play(); 
+            }
+            catch(MediaException ex){
+                JOptionPane.showMessageDialog(this,"Error al reproducir el archivo: "+ex.getMessage(),
+                    "Error de reproducción", JOptionPane.ERROR_MESSAGE);
+                    songModel.endSong();
+                    setStoppedView();
+                    setError();
+            }
         }
     }//GEN-LAST:event_BtPlayPauseActionPerformed
 
@@ -368,6 +427,14 @@ public class SongView extends javax.swing.JPanel {
         enableBtInfo(false);
         info.showView(this);
     }//GEN-LAST:event_btInfoActionPerformed
+
+    private void formMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formMouseReleased
+        this.hardSelect(!hardSelected);
+    }//GEN-LAST:event_formMouseReleased
+
+    private void titleLabelMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titleLabelMouseReleased
+        formMouseReleased(evt);
+    }//GEN-LAST:event_titleLabelMouseReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

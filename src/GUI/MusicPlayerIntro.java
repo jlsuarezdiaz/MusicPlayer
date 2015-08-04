@@ -5,6 +5,7 @@
  */
 package GUI;
 
+import java.awt.Color;
 import java.awt.Toolkit;
 import static java.lang.Thread.sleep;
 import java.util.logging.Level;
@@ -50,6 +51,7 @@ public class MusicPlayerIntro extends javax.swing.JDialog {
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Music Player");
         setAlwaysOnTop(true);
+        setBackground(new java.awt.Color(255, 255, 255));
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Media/player_icon.png")));
 
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N

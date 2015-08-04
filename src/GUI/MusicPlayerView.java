@@ -73,6 +73,11 @@ public class MusicPlayerView extends javax.swing.JFrame {
     //private int currentSongIndex;
     
     /**
+     * Number of selected songs.
+     */
+    private int selectedSongsNumber;
+    
+    /**
      * Sets the view according to if music is playing.
      * @param playing Determines if player is running.
      */
@@ -116,9 +121,7 @@ public class MusicPlayerView extends javax.swing.JFrame {
                         mpModel.chooseSong(sv.getSong());
                     }
                     catch(MediaException ex){
-                        JOptionPane.showMessageDialog(this,"Error al reproducir el archivo: "+ex.getMessage(),
-                            "Error de reproducción", JOptionPane.ERROR_MESSAGE);
-                        mpModel.stop();
+                        managePlayingError(ex);
                     }
                     findCurrentSongView().softSelect(true);
                     scrollToSelection();
@@ -134,9 +137,7 @@ public class MusicPlayerView extends javax.swing.JFrame {
                         mpModel.play();
                     }
                     catch(MediaException ex){
-                        JOptionPane.showMessageDialog(this,"Error al reproducir el archivo: "+ex.getMessage(),
-                            "Error de reproducción", JOptionPane.ERROR_MESSAGE);
-                        mpModel.stop();
+                        managePlayingError(ex);
                     }
                     this.setPlayingView(true);
                 }
@@ -150,6 +151,12 @@ public class MusicPlayerView extends javax.swing.JFrame {
                 }
             }
         }
+        //Selection management.
+        else if(obj instanceof SongView || obj instanceof javax.swing.JLabel){
+            if(sv.isHardSelected()) selectedSongsNumber++;
+            else selectedSongsNumber--;
+            BtRemove.setEnabled(selectedSongsNumber != 0);
+        }
     }
     
     /**
@@ -157,14 +164,15 @@ public class MusicPlayerView extends javax.swing.JFrame {
      * @return current song view.
      */
     private SongView findCurrentSongView(){
-        SongView sv;
+        /*SongView sv;
         for(Component c : SongPanel.getComponents()){
             sv = (SongView)c;
             if(sv.getSong() == mpModel.getCurrentSong()){
                 return sv;
             }
         }
-        return null;
+        return null;*/
+        return (SongView) SongPanel.getComponent(mpModel.getCurrentSongIndex());
     }
     
     /**
@@ -193,6 +201,30 @@ public class MusicPlayerView extends javax.swing.JFrame {
         }
     }
     
+    private void managePlayingError(MediaException ex){
+        JOptionPane.showMessageDialog(this,"Error al reproducir el archivo: "+ex.getMessage(),
+            "Error de reproducción", JOptionPane.ERROR_MESSAGE);
+        findCurrentSongView().setSong(mpModel.getCurrentSong()); //Updates error flag.
+        //SongPanel.repaint();
+        mpModel.stop();        
+        setPlayingView(playing);
+    }
+    
+    /**
+     * Gets the list of selected songs.
+     * @return Array with selected songs.
+     */
+    private ArrayList<Song> getSelectedSongs(){
+        SongView sv;
+        ArrayList<Song> songs = new ArrayList();
+        for(Component c : SongPanel.getComponents()){
+            sv = (SongView) c;
+            if(sv.isHardSelected())
+                songs.add(sv.getSong());
+        }
+        return songs;
+    }
+    
     /**
      * Creates new form PlayerView
      */
@@ -207,9 +239,7 @@ public class MusicPlayerView extends javax.swing.JFrame {
                         mpModel.next();
                     }
                     catch(MediaException ex){
-                            JOptionPane.showMessageDialog(this,"Error al reproducir el archivo: "+ex.getMessage(),
-                                "Error de reproducción", JOptionPane.ERROR_MESSAGE);
-                            mpModel.stop();
+                        managePlayingError(ex);
                     }
                     findCurrentSongView().softSelect(true);   /////
                     scrollToSelection();
@@ -267,6 +297,8 @@ public class MusicPlayerView extends javax.swing.JFrame {
         timerSongController.start();
         setMode(mpModel.getMode());
         
+        
+        
         //this.currentSongIndex = mpModel.getCurrentSongIndex();
         if(!mpModel.isEmpty()) findCurrentSongView().softSelect(true); /////
         //if(!mpModel.isEmpty()) ((SongView)SongPanel.getComponent(currentSongIndex)).softSelect(true);
@@ -275,7 +307,10 @@ public class MusicPlayerView extends javax.swing.JFrame {
         AllSongsInfoLab.setText(Integer.toString(mpModel.getPlaylistSize())+" canciones. Tiempo de música: "+
                 df.format(new Time((long) (mpModel.getPlaylistLength()*1000)))+ " ");
         
+        
         enableButtons();
+        BtRemove.setEnabled(selectedSongsNumber != 0);
+        
         repaint();
         revalidate();
     }
@@ -292,12 +327,16 @@ public class MusicPlayerView extends javax.swing.JFrame {
     public void fillSongsPanel(ArrayList<Song> list) {
         // Deletes old information
         SongPanel.removeAll();
-
+        this.selectedSongsNumber = 0;
+        
         // For each treasure in the list add its view to the panel.
         for (Song s : list) {
             SongView sv = new SongView();
             sv.setSong(s);
             sv.setVisible (true);
+            
+            if(sv.isHardSelected()) selectedSongsNumber++;
+            
             SongPanel.add(sv);
             sv.addCompleteMouseListener(new java.awt.event.MouseAdapter() {
                 @Override
@@ -371,6 +410,7 @@ public class MusicPlayerView extends javax.swing.JFrame {
         BtSaveSongList = new javax.swing.JButton();
         BtLoadSongList = new javax.swing.JButton();
         AllSongsInfoLab = new javax.swing.JLabel();
+        BtRemove = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Music Player");
@@ -519,6 +559,15 @@ public class MusicPlayerView extends javax.swing.JFrame {
         AllSongsInfoLab.setHorizontalAlignment(javax.swing.SwingConstants.RIGHT);
         AllSongsInfoLab.setText("228 canciones. Tiempo de música: 10:28:57 ");
 
+        BtRemove.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Media/delete_icon.png"))); // NOI18N
+        BtRemove.setToolTipText("Borrar (Remove)");
+        BtRemove.setPreferredSize(new java.awt.Dimension(28, 28));
+        BtRemove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtRemoveActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -554,7 +603,9 @@ public class MusicPlayerView extends javax.swing.JFrame {
                                 .addComponent(BtNext, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(70, 70, 70)
                                 .addComponent(BtStop, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 111, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
+                                .addComponent(BtRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(BtLoadSongList, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -598,7 +649,8 @@ public class MusicPlayerView extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(BtAddSong, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(BtAddFolder, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(BtAddFolder, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(BtRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(BtLoadSongList, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -633,13 +685,12 @@ public class MusicPlayerView extends javax.swing.JFrame {
         else{
             try{
                 mpModel.play();
+                setPlayingView(true);
             }
             catch(MediaException ex){
-                        JOptionPane.showMessageDialog(this,"Error al reproducir el archivo: "+ex.getMessage(),
-                            "Error de reproducción", JOptionPane.ERROR_MESSAGE);
-                        mpModel.stop();
+                managePlayingError(ex);
             }
-            setPlayingView(true);
+            scrollToSelection();
         }
     }//GEN-LAST:event_BtPlayPauseActionPerformed
 
@@ -659,9 +710,7 @@ public class MusicPlayerView extends javax.swing.JFrame {
             mpModel.next();
         }
         catch(MediaException ex){
-            JOptionPane.showMessageDialog(this,"Error al reproducir el archivo: "+ex.getMessage(),
-                "Error de reproducción", JOptionPane.ERROR_MESSAGE);
-            mpModel.stop();
+            managePlayingError(ex);
         }
         findCurrentSongView().softSelect(true);
         scrollToSelection();
@@ -679,9 +728,7 @@ public class MusicPlayerView extends javax.swing.JFrame {
             mpModel.back();
         }
         catch(MediaException ex){
-                        JOptionPane.showMessageDialog(this,"Error al reproducir el archivo: "+ex.getMessage(),
-                            "Error de reproducción", JOptionPane.ERROR_MESSAGE);
-                        mpModel.stop();
+            managePlayingError(ex);
         }
         findCurrentSongView().softSelect(true);
         scrollToSelection();
@@ -834,6 +881,16 @@ public class MusicPlayerView extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_BtLoadSongListActionPerformed
 
+    private void BtRemoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtRemoveActionPerformed
+        int opt = JOptionPane.showConfirmDialog(this, "¿Seguro que desea continuar? Las canciones seleccionadas desaparecerán de la lista.",
+            "Borrar canciones", JOptionPane.YES_NO_OPTION , JOptionPane.QUESTION_MESSAGE);
+        if(opt == JOptionPane.YES_OPTION){
+            mpModel.remove(getSelectedSongs());
+            setMusicPlayer(mpModel);
+            scrollToSelection();
+        }
+    }//GEN-LAST:event_BtRemoveActionPerformed
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -849,6 +906,7 @@ public class MusicPlayerView extends javax.swing.JFrame {
     private javax.swing.JButton BtPlayPause;
     private javax.swing.JToggleButton BtRandom;
     private javax.swing.JToggleButton BtRandomStar;
+    private javax.swing.JButton BtRemove;
     private javax.swing.JToggleButton BtRepeat;
     private javax.swing.JButton BtSaveSongList;
     private javax.swing.JToggleButton BtSequential;

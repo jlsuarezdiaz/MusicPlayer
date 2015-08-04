@@ -123,29 +123,41 @@ public class SettingsView extends javax.swing.JDialog {
         BtErase = new javax.swing.JButton();
         BtSetDefault = new javax.swing.JButton();
         BtResetDefault = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+        BtClear = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Configuración");
         setIconImage(Toolkit.getDefaultToolkit().getImage(getClass().getResource("/Media/settings_icon_xs.png")));
+        setMaximumSize(new java.awt.Dimension(330, 512));
+        setMinimumSize(new java.awt.Dimension(330, 512));
         setResizable(false);
 
-        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 11)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
         jLabel1.setText("Frecuencias del modo de reproducción ponderada:");
 
+        jLabel2.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
         jLabel2.setText("6 estrellas:");
 
+        jLabel3.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
         jLabel3.setText("5 estrellas:");
 
+        jLabel4.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
         jLabel4.setText("4 estrellas:");
 
+        jLabel5.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
         jLabel5.setText("3 estrellas:");
 
+        jLabel6.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
         jLabel6.setText("2 estrellas:");
 
+        jLabel7.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
         jLabel7.setText("1 estrella:");
 
+        jLabel8.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
         jLabel8.setText("No valoradas:");
 
+        BtSet.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
         BtSet.setText("Establecer configuración");
         BtSet.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -153,35 +165,47 @@ public class SettingsView extends javax.swing.JDialog {
             }
         });
 
+        Spin6Stars.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
         Spin6Stars.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         Spin6Stars.setText("0");
 
+        Spin5Stars.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
         Spin5Stars.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         Spin5Stars.setText("0");
 
+        Spin4Stars.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
         Spin4Stars.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         Spin4Stars.setText("0");
 
+        Spin3Stars.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
         Spin3Stars.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         Spin3Stars.setText("0");
 
+        Spin2Stars.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
         Spin2Stars.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         Spin2Stars.setText("0");
 
+        Spin1Star.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
         Spin1Star.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         Spin1Star.setText("0");
 
+        SpinNoStars.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
         SpinNoStars.setHorizontalAlignment(javax.swing.JTextField.CENTER);
         SpinNoStars.setText("0");
 
+        jLabel9.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
         jLabel9.setText("Modo de reproducción por defecto:");
 
+        ComboDefaultPlayMode.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
         ComboDefaultPlayMode.setModel(new DefaultComboBoxModel<>(PlayingMode.values()));
 
+        jLabel10.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
         jLabel10.setText("Lista de reproducción inicial:");
 
+        TxtDefaultPlaylist.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
         TxtDefaultPlaylist.setText("/home/myList.mplj");
 
+        BtChoosePlaylist.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
         BtChoosePlaylist.setText("Examinar");
         BtChoosePlaylist.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -189,6 +213,7 @@ public class SettingsView extends javax.swing.JDialog {
             }
         });
 
+        BtErase.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
         BtErase.setText("Borrar");
         BtErase.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -196,6 +221,7 @@ public class SettingsView extends javax.swing.JDialog {
             }
         });
 
+        BtSetDefault.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
         BtSetDefault.setText("Establecer configuración por defecto");
         BtSetDefault.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -203,10 +229,22 @@ public class SettingsView extends javax.swing.JDialog {
             }
         });
 
+        BtResetDefault.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
         BtResetDefault.setText("Restablecer configuración de fábrica");
         BtResetDefault.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtResetDefaultActionPerformed(evt);
+            }
+        });
+
+        jLabel11.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
+        jLabel11.setText("Borrar canciones de la lista de reproducción: ");
+
+        BtClear.setFont(new java.awt.Font("Calibri", 1, 12)); // NOI18N
+        BtClear.setText("Borrar");
+        BtClear.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BtClearActionPerformed(evt);
             }
         });
 
@@ -216,11 +254,26 @@ public class SettingsView extends javax.swing.JDialog {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                     .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel11)
+                        .addComponent(BtClear, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                            .addComponent(BtResetDefault, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(BtSetDefault, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(jLabel9, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(ComboDefaultPlayMode, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(jLabel10, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(TxtDefaultPlaylist, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(BtErase, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(BtChoosePlaylist, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)))
+                            .addComponent(BtSet, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel3, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -230,29 +283,15 @@ public class SettingsView extends javax.swing.JDialog {
                                     .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(SpinNoStars)
-                                    .addComponent(Spin1Star)
-                                    .addComponent(Spin2Stars)
-                                    .addComponent(Spin6Stars)
-                                    .addComponent(Spin5Stars)
-                                    .addComponent(Spin4Stars)
-                                    .addComponent(Spin3Stars)))
-                            .addComponent(BtSet, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(TxtDefaultPlaylist, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(ComboDefaultPlayMode, javax.swing.GroupLayout.PREFERRED_SIZE, 169, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel9)
-                                    .addComponent(jLabel10))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(BtChoosePlaylist, javax.swing.GroupLayout.DEFAULT_SIZE, 108, Short.MAX_VALUE)
-                                    .addComponent(BtErase, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                            .addComponent(BtSetDefault, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(BtResetDefault, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(Spin1Star, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(Spin2Stars, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(Spin3Stars, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(Spin4Stars, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(Spin5Stars, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(SpinNoStars, javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(Spin6Stars, javax.swing.GroupLayout.Alignment.LEADING))))))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -303,9 +342,13 @@ public class SettingsView extends javax.swing.JDialog {
                     .addComponent(BtErase))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(BtSetDefault)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(BtResetDefault)
-                .addContainerGap())
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jLabel11)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(BtClear)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -347,10 +390,20 @@ public class SettingsView extends javax.swing.JDialog {
         this.setView(view);
     }//GEN-LAST:event_BtResetDefaultActionPerformed
 
+    private void BtClearActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtClearActionPerformed
+        int opt = JOptionPane.showConfirmDialog(this, "¿Seguro que desea continuar? Todas las canciones desaparecerán de la lista.",
+                "Borrar canciones", JOptionPane.YES_NO_OPTION , JOptionPane.QUESTION_MESSAGE);
+        if(opt == JOptionPane.YES_OPTION){
+            view.getMusicPlayer().clear();
+            view.setMusicPlayer(view.getMusicPlayer());
+        }
+    }//GEN-LAST:event_BtClearActionPerformed
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BtChoosePlaylist;
+    private javax.swing.JButton BtClear;
     private javax.swing.JButton BtErase;
     private javax.swing.JButton BtResetDefault;
     private javax.swing.JButton BtSet;
@@ -366,6 +419,7 @@ public class SettingsView extends javax.swing.JDialog {
     private javax.swing.JTextField TxtDefaultPlaylist;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
