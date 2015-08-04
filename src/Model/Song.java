@@ -95,12 +95,12 @@ public class Song {
     /**
      * The song structure.
      */
-    Media song;
+    private Media song;
     
     /**
      * End of song flag.
      */
-    boolean end;
+    private boolean end;
     
     /**
      * JFX Panel
@@ -130,13 +130,24 @@ public class Song {
     private Runnable onErrorTask;
     private Runnable onEndOfMediaTask;
     
+    /**
+     * Error flag.
+     */
+    private boolean error;
+    
     // ---------- PRIVATE METHODS ---------- //
     /**
      * Initializes media.
      */
     private void initMedia() throws MediaException{
-        song = new Media(Paths.get(path).toUri().toString());
-        player = new MediaPlayer(song);
+        try{
+            song = new Media(Paths.get(path).toUri().toString());
+            player = new MediaPlayer(song);
+        }
+        catch(MediaException ex){
+           error = true;
+           throw ex;
+        }
         
         while(player.getStatus() != Status.READY){
             try {
@@ -218,6 +229,8 @@ public class Song {
         setOnRepeat(null);
         setOnStalled(null);
         setOnStopped(null);
+        
+        this.error = false;
     }
     
     // ---------- CONSTRUCTOR ---------- //
@@ -237,6 +250,7 @@ public class Song {
         this.album = "UNKNOWN";
         this.disc = "NONE";
         this.number = "-";
+        this.error = false;
     }
     
     /**
@@ -323,7 +337,7 @@ public class Song {
      * @return status
      */
     public Status getStatus(){
-        return player.getStatus();
+        return (player==null)?null:player.getStatus();
     }
     
     /**
@@ -382,6 +396,10 @@ public class Song {
     public void setNumber(String number){
         if(number.trim().isEmpty()) this.number = "-";
         else this.number = number;
+    }
+    
+    public boolean getError(){
+        return error;
     }
 
     // ---------- HANDLERS ---------- //
@@ -520,11 +538,12 @@ public class Song {
     
     public void endSong(){
         end = true;
-        player.stop();
+        if(player != null) player.stop();
         try {
             sleep(100);
         } catch (InterruptedException ex) {}
         end = false;
+        
     }
     
     // ---------- IO-METHODS ---------- //

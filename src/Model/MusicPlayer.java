@@ -372,6 +372,47 @@ public class MusicPlayer {
     }
     
     /**
+     * Removes from the list the given song.
+     * @param s Song to remove.
+     */
+    public void remove(Song s){
+        if(s == currentSong){
+            next();
+        }
+        songList.remove(s);
+        playTime -= s.getLength();
+        currentSongIndex = songList.indexOf(currentSong);
+    }
+    
+    /**
+     * Removes from the list the given song list.
+     * @param songs List of songs to remove.
+     */
+    public void remove(ArrayList<Song> songs){
+        for(Song s : songs){
+            songList.remove(s);
+            playTime -= s.getLength();
+        }
+        int newIndex = songList.indexOf(currentSong);
+        if(newIndex == -1){
+            stop();
+            currentSongIndex = currentSongIndex % songList.size();
+            currentSong = songList.get(currentSongIndex);
+        }
+        else{
+            currentSongIndex = newIndex;
+        }
+    }
+    
+    /**
+     * Removes all the songs from the list.
+     */
+    public void clear(){
+        stop();
+        songList.clear();
+        playTime = 0;
+    }
+    /**
      * Adds all the songs in a given directory.
      * @param path Directory path.
      */
