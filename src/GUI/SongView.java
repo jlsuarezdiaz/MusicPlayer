@@ -414,10 +414,10 @@ public class SongView extends javax.swing.JPanel {
         titleLabel.setToolTipText("<html>" +
             songModel.getPath() + "<br> <br>" + songModel.getTitle() + "<br>" +
             (("UNKNOWN".equals(songModel.getAuthor()))?"":("<br> Autor: "+songModel.getAuthor())) +
-            ((songModel.getDescription() == "-")?"":("<br>"+songModel.getDescription())) +
-            ((songModel.getAlbum() == "UNKNOWN")?"":("<br> Album: "+songModel.getAlbum())) +
-            ((songModel.getDisc() == "NONE")?"":("<br> Disco: "+songModel.getDisc())) +
-            ((songModel.getNumber() == "-")?"":("<br> Nº: "+songModel.getNumber())) +    
+            (("-".equals(songModel.getDescription()))?"":("<br>"+songModel.getDescription())) +
+            (("UNKNOWN".equals(songModel.getAlbum()))?"":("<br> Album: "+songModel.getAlbum())) +
+            (("NONE".equals(songModel.getDisc()))?"":("<br> Disco: "+songModel.getDisc())) +
+            (("-".equals(songModel.getNumber()))?"":("<br> Nº: "+songModel.getNumber())) +    
             "<br> <br>" + df.format(new Time((long)(songModel.getElapsedTime()*1000))) + " / "
             + df.format(new Time((long) (songModel.getLength()*1000))) + "</html>"
         );
