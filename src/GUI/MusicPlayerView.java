@@ -194,7 +194,7 @@ public class MusicPlayerView extends javax.swing.JFrame {
         int val = findCurrentSongView().getHeight() * mpModel.getCurrentSongIndex() - jScrollPane1.getVerticalScrollBar().getValue();
         /*jScrollPane1.getVerticalScrollBar().getHeight()*/
         if(!mpModel.isEmpty() && 
-              val  >= SongPanel.getComponent(0).getHeight()*8 || val < 0){
+              val  >= SongPanel.getComponent(0).getHeight()*8 || val < 0){  //!!!!!!!!
             //SongView selected = findCurrentSongView();
             jScrollPane1.getVerticalScrollBar().setValue(SongPanel.getComponent(0).getHeight() * mpModel.getCurrentSongIndex());
             jScrollPane1.repaint();
