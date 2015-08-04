@@ -191,16 +191,17 @@ public class MusicPlayerView extends javax.swing.JFrame {
      * Scrolls song panel to selected song.
      */
     private void scrollToSelection() {
-        int val = findCurrentSongView().getHeight() * mpModel.getCurrentSongIndex() - jScrollPane1.getVerticalScrollBar().getValue();
         /*jScrollPane1.getVerticalScrollBar().getHeight()*/
-        if(!mpModel.isEmpty() && 
-              val  >= SongPanel.getComponent(0).getHeight()*8 || val < 0){  //!!!!!!!!
-            //SongView selected = findCurrentSongView();
-            jScrollPane1.getVerticalScrollBar().setValue(SongPanel.getComponent(0).getHeight() * mpModel.getCurrentSongIndex());
-            jScrollPane1.repaint();
-            jScrollPane1.revalidate();
-            this.repaint();
-            this.revalidate();
+        if(!mpModel.isEmpty()){
+            int val = findCurrentSongView().getHeight() * mpModel.getCurrentSongIndex() - jScrollPane1.getVerticalScrollBar().getValue();
+            if(val  >= SongPanel.getComponent(0).getHeight()*8 || val < 0){  //!!!!!!!!
+                //SongView selected = findCurrentSongView();
+                jScrollPane1.getVerticalScrollBar().setValue(SongPanel.getComponent(0).getHeight() * mpModel.getCurrentSongIndex());
+                jScrollPane1.repaint();
+                jScrollPane1.revalidate();
+                this.repaint();
+                this.revalidate();
+            }
         }
     }
     
@@ -563,7 +564,7 @@ public class MusicPlayerView extends javax.swing.JFrame {
         AllSongsInfoLab.setText("228 canciones. Tiempo de música: 10:28:57 ");
 
         BtRemove.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Media/delete_icon.png"))); // NOI18N
-        BtRemove.setToolTipText("Borrar (Remove)");
+        BtRemove.setToolTipText("Borrar canciones seleccionadas");
         BtRemove.setPreferredSize(new java.awt.Dimension(28, 28));
         BtRemove.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -234,6 +234,7 @@ public class SongView extends javax.swing.JPanel {
     public boolean isHardSelected(){
         return this.hardSelected;
     }
+    
     public void addCompleteMouseListener(MouseAdapter evt){
         this.addMouseListener(evt);
         BtPlayPause.addMouseListener(evt);
@@ -242,6 +243,14 @@ public class SongView extends javax.swing.JPanel {
         BtBackward.addMouseListener(evt);
         ratingPanel.addMouseListener(evt);
         titleLabel.addMouseListener(evt);
+    }
+    
+    public void reduceView(){
+        BtPlayPause.setVisible(false);
+        BtStop.setVisible(false);
+        BtForward.setVisible(false);
+        BtBackward.setVisible(false);
+        titleLabel.setSize(titleLabel.getWidth(),125);
     }
     
     /**
@@ -362,10 +371,6 @@ public class SongView extends javax.swing.JPanel {
         songModel.fastForward();
     }//GEN-LAST:event_BtForwardActionPerformed
 
-    private void BtBackwardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtBackwardActionPerformed
-        songModel.backward();
-    }//GEN-LAST:event_BtBackwardActionPerformed
-
     public void setError(){
         this.titleLabel.setText("[ERROR!!]  " + titleLabel.getText());
         this.titleLabel.setForeground(Color.RED);
@@ -435,6 +440,10 @@ public class SongView extends javax.swing.JPanel {
     private void titleLabelMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_titleLabelMouseReleased
         formMouseReleased(evt);
     }//GEN-LAST:event_titleLabelMouseReleased
+
+    private void BtBackwardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtBackwardActionPerformed
+        songModel.backward();
+    }//GEN-LAST:event_BtBackwardActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
