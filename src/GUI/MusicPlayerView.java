@@ -15,6 +15,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import static java.lang.Thread.sleep;
@@ -23,6 +24,7 @@ import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.NoSuchElementException;
 import java.util.TimeZone;
 import java.util.logging.Level;
@@ -534,7 +536,7 @@ public class MusicPlayerView extends javax.swing.JFrame {
         });
 
         BtAddSong.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Media/add_icon.png"))); // NOI18N
-        BtAddSong.setToolTipText("Añadir canción");
+        BtAddSong.setToolTipText("Añadir canciones");
         BtAddSong.setPreferredSize(new java.awt.Dimension(32, 32));
         BtAddSong.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -800,6 +802,7 @@ public class MusicPlayerView extends javax.swing.JFrame {
     private void BtAddFolderActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtAddFolderActionPerformed
         JFileChooser fc = new JFileChooser();
         fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+        fc.setMultiSelectionEnabled(true);
         int returnVal = fc.showDialog(this,"Añadir directorio");
         if(returnVal == JFileChooser.APPROVE_OPTION){
             int rec = JOptionPane.showConfirmDialog(this, "¿Desea añadir las canciones que se hallen en subdirectorios?",
@@ -808,10 +811,20 @@ public class MusicPlayerView extends javax.swing.JFrame {
             JDialog j = MusicPlayerView.showLoadingDialog();
             
             try{         
-                if(rec == JOptionPane.YES_OPTION)
-                    mpModel.addDirectoryRecursive(fc.getSelectedFile().getAbsolutePath());
-                else
-                    mpModel.addDirectory(fc.getSelectedFile().getAbsolutePath());
+                if(rec == JOptionPane.YES_OPTION){
+                    //mpModel.addDirectoryRecursive(fc.getSelectedFile().getAbsolutePath());
+                    File[] songs = fc.getSelectedFiles();
+                    for(File s : songs){
+                        mpModel.addDirectoryRecursive(s.getAbsolutePath());
+                    }
+                }
+                else{
+                    //mpModel.addDirectory(fc.getSelectedFile().getAbsolutePath());
+                    File[] songs = fc.getSelectedFiles();
+                    for(File s : songs){
+                        mpModel.addDirectory(s.getAbsolutePath());
+                    }
+                }
                 //////////////////////////////////////////// MEJORAR ESTO
                 this.setMusicPlayer(mpModel);
                 ////////////////////////////////////////////
@@ -830,10 +843,16 @@ public class MusicPlayerView extends javax.swing.JFrame {
 
     private void BtAddSongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtAddSongActionPerformed
         JFileChooser fc = new JFileChooser();
-        int returnVal = fc.showDialog(this,"Añadir canción");
+        fc.setMultiSelectionEnabled(true);
+        int returnVal = fc.showDialog(this,"Añadir canciones");
         if(returnVal == JFileChooser.APPROVE_OPTION){
+            JDialog j = showLoadingDialog();
             try{
-                mpModel.add(new Song(fc.getSelectedFile().getAbsolutePath()));
+                File[] songs = fc.getSelectedFiles();
+                for(File s : songs){
+                    mpModel.add(new Song(s.getAbsolutePath()));
+                }
+                //mpModel.add(new Song(fc.getSelectedFile().getAbsolutePath()));
                 //////////////////////////////////////////// MEJORAR ESTO
                 this.setMusicPlayer(mpModel);
                 ////////////////////////////////////////////
@@ -841,7 +860,8 @@ public class MusicPlayerView extends javax.swing.JFrame {
             catch(Exception ex){
                 JOptionPane.showMessageDialog(this, "El archivo indicado no es reproducible." , "Error : " + ex.getMessage() , JOptionPane.ERROR_MESSAGE);
             }
-            //scrollToSelection();//????
+            closeLoadingDialog(j);
+            scrollToSelection();//????
         }
     }//GEN-LAST:event_BtAddSongActionPerformed
 

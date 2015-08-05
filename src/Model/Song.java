@@ -172,7 +172,7 @@ public class Song {
      */
     private void discardMedia(){
         try {
-            while(player != null && player.getStatus() != Status.STOPPED)
+            while(player != null && (player.getStatus() != Status.STOPPED && player.getStatus() != Status.READY ))
                 sleep(10);  //Updating time
         } catch (InterruptedException ex) {}
         song = null;
