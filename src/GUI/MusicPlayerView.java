@@ -8,6 +8,7 @@ package GUI;
 import Model.MusicPlayer;
 import Model.PlayingMode;
 import Model.Song;
+import java.awt.Color;
 import java.awt.Component;
 import java.awt.Rectangle;
 import java.awt.Toolkit;
@@ -36,6 +37,7 @@ import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
+import javax.swing.UIManager;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 /**
@@ -471,6 +473,13 @@ public class MusicPlayerView extends javax.swing.JFrame {
             }
         });
 
+        songTimeBar.setPreferredSize(new java.awt.Dimension(780, 14));
+        songTimeBar.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                songTimeBarStateChanged(evt);
+            }
+        });
+
         SongPanel.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         SongPanel.setLayout(new javax.swing.BoxLayout(SongPanel, javax.swing.BoxLayout.PAGE_AXIS));
         jScrollPane1.setViewportView(SongPanel);
@@ -536,7 +545,7 @@ public class MusicPlayerView extends javax.swing.JFrame {
         });
 
         BtAddSong.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Media/add_icon.png"))); // NOI18N
-        BtAddSong.setToolTipText("Añadir canciones");
+        BtAddSong.setToolTipText("Añadir canción");
         BtAddSong.setPreferredSize(new java.awt.Dimension(32, 32));
         BtAddSong.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -609,7 +618,7 @@ public class MusicPlayerView extends javax.swing.JFrame {
                                 .addComponent(BtNext, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(70, 70, 70)
                                 .addComponent(BtStop, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addComponent(BtRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -914,6 +923,33 @@ public class MusicPlayerView extends javax.swing.JFrame {
             scrollToSelection();
         }
     }//GEN-LAST:event_BtRemoveActionPerformed
+
+    private void songTimeBarStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_songTimeBarStateChanged
+        double frac = ((double)songTimeBar.getValue())/((double)songTimeBar.getMaximum());
+        songTimeBar.setStringPainted(true);
+        songTimeBar.setString("");
+        songTimeBar.setSize(songTimeBar.getPreferredSize());
+        if(frac < 0.25){
+            //songTimeBar.setForeground(Color.RED);
+            //songTimeBar.setForeground(new Color(0xFA5858));
+            songTimeBar.setForeground(new Color(0xF5A9A9));
+        }
+        else if(frac < 0.5){
+            //songTimeBar.setForeground(Color.YELLOW);
+            //songTimeBar.setForeground(new Color(0xF4FA58));
+            songTimeBar.setForeground(new Color(0xF2F5A9));
+        }
+        else if(frac < 0.75){
+            //songTimeBar.setForeground(Color.GREEN);
+            //songTimeBar.setForeground(new Color(0x58FA82));
+            songTimeBar.setForeground(new Color(0xA9F5A9));
+        }
+        else{
+            //songTimeBar.setForeground(Color.BLUE);
+            //songTimeBar.setForeground(new Color(0x58ACFA));
+            songTimeBar.setForeground(new Color(0xA9F5F2));
+        }
+    }//GEN-LAST:event_songTimeBarStateChanged
 
 
 
