@@ -798,8 +798,7 @@ public class MusicPlayerView extends javax.swing.JFrame {
         dialog.pack();
         dialog.setVisible(true);
         
-        dialog.repaint();
-        dialog.revalidate();
+        dialog.paintAll(dialog.getGraphics());
         
         return dialog;
     }
