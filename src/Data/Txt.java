@@ -18,17 +18,22 @@ public class Txt {
             "Versión 1.0 (1/8/2015):"+
             "\n- Primer programa. Reproductor de música básico."+
             "\n- Reproducción, pausa, parada y manejo de canciones."+
-            "\n- Modos de reproduccion y opciones de configuración."
+            "\n- Modos de reproduccion y opciones de configuración.\n\n"+
+            "Versión 1.1 (3/8/2015):"+
+            "\n- Solucionados problemas de codificación."+
+            "\n- Selección y borrado de canciones."+
+            "\n- Control de errores de reproducción.\n\n"
             ;
     
     /**
      * String with info about last version.
      */
     public static final String LAST_VERSION_INFO =
-            "Versión 1.1 (3/8/2015):"+
-            "\n- Solucionados problemas de codificación."+
-            "\n- Selección y borrado de canciones."+
-            "\n- Control de errores de reproducción."
+            "Versión 1.2 (5/8/2015):"+
+            "\n- Scrolling mejorado."+
+            "\n- Añadida selección múltiple de canciones."+
+            "\n- Algunos bugs solucionados."+
+            "\n- Barra de tiempo coloreada."
     ;
     
     /**

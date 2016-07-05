@@ -500,6 +500,8 @@ public class Song {
         end = false;
         if(player==null) initMedia();
         player.play();
+        //System.out.println(song.getMetadata().toString());
+       
     }
     
     /**
