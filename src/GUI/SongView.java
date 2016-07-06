@@ -7,6 +7,8 @@ package GUI;
 
 import Model.Song;
 import java.awt.Color;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.sql.Time;
 import java.text.DateFormat;
@@ -15,6 +17,7 @@ import java.util.TimeZone;
 import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer.Status;
 import javax.swing.JOptionPane;
+import javax.swing.Timer;
 
 /**
  * Class SongView.
@@ -47,6 +50,11 @@ public class SongView extends javax.swing.JPanel {
      */
     private static final DateFormat df = new SimpleDateFormat("HH:mm:ss");
     static {df.setTimeZone(TimeZone.getTimeZone("GMT"));}
+    
+    /* Timers to control quick time movements.*/
+    private Timer backwardTimer;
+    private Timer forwardTimer;
+    
     /**
      * Sets background according to playing mode.
      */
@@ -113,7 +121,19 @@ public class SongView extends javax.swing.JPanel {
      * Creates new form SongView
      */
     public SongView() {
-        initComponents();    
+        initComponents();  
+        backwardTimer = new Timer(100, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                songModel.moveSong(-500);
+            }
+        });
+        forwardTimer = new Timer(100, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                songModel.moveSong(500);
+            }
+        });
     }
 
     /**
@@ -292,9 +312,12 @@ public class SongView extends javax.swing.JPanel {
 
         BtBackward.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Media/backward_button.png"))); // NOI18N
         BtBackward.setToolTipText("Rebobinar");
-        BtBackward.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtBackwardActionPerformed(evt);
+        BtBackward.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                BtBackwardMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                BtBackwardMouseReleased(evt);
             }
         });
 
@@ -307,9 +330,12 @@ public class SongView extends javax.swing.JPanel {
 
         BtForward.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Media/forward_button.png"))); // NOI18N
         BtForward.setToolTipText("Avanzar");
-        BtForward.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtForwardActionPerformed(evt);
+        BtForward.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                BtForwardMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                BtForwardMouseReleased(evt);
             }
         });
 
@@ -366,10 +392,6 @@ public class SongView extends javax.swing.JPanel {
                     .addComponent(btInfo, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
     }// </editor-fold>//GEN-END:initComponents
-
-    private void BtForwardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtForwardActionPerformed
-        songModel.fastForward();
-    }//GEN-LAST:event_BtForwardActionPerformed
 
     public void setError(){
         this.titleLabel.setText("[ERROR!!]  " + titleLabel.getText());
@@ -441,9 +463,23 @@ public class SongView extends javax.swing.JPanel {
         formMouseReleased(evt);
     }//GEN-LAST:event_titleLabelMouseReleased
 
-    private void BtBackwardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtBackwardActionPerformed
-        songModel.backward();
-    }//GEN-LAST:event_BtBackwardActionPerformed
+ 
+    
+    private void BtBackwardMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtBackwardMousePressed
+        backwardTimer.start();
+    }//GEN-LAST:event_BtBackwardMousePressed
+
+    private void BtBackwardMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtBackwardMouseReleased
+       backwardTimer.stop();
+    }//GEN-LAST:event_BtBackwardMouseReleased
+
+    private void BtForwardMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtForwardMousePressed
+        forwardTimer.start();
+    }//GEN-LAST:event_BtForwardMousePressed
+
+    private void BtForwardMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtForwardMouseReleased
+        forwardTimer.stop();
+    }//GEN-LAST:event_BtForwardMouseReleased
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

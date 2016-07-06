@@ -58,6 +58,7 @@ public class MusicPlayerIntro extends javax.swing.JDialog {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("MUSIC PLAYER");
 
+        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Media/player_icon.png"))); // NOI18N
 
         labelAuthor.setFont(new java.awt.Font("Tahoma", 2, 11)); // NOI18N

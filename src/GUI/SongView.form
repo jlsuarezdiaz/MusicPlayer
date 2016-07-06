@@ -89,7 +89,8 @@
         <Property name="toolTipText" type="java.lang.String" value="Rebobinar"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtBackwardActionPerformed"/>
+        <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="BtBackwardMousePressed"/>
+        <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="BtBackwardMouseReleased"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="BtPlayPause">
@@ -110,7 +111,8 @@
         <Property name="toolTipText" type="java.lang.String" value="Avanzar"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtForwardActionPerformed"/>
+        <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="BtForwardMousePressed"/>
+        <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="BtForwardMouseReleased"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="BtStop">

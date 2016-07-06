@@ -32,6 +32,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.scene.media.MediaException;
 import javafx.scene.media.MediaPlayer;
+import javafx.util.Duration;
 import javax.swing.JDialog;
 import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
@@ -80,6 +81,12 @@ public class MusicPlayerView extends javax.swing.JFrame {
      * Number of selected songs.
      */
     private int selectedSongsNumber;
+    
+    /**
+     * Value indicating playing speed.
+     */
+    private double advanceSpeed;
+    private static int speedConstant = 100;
     
     /**
      * Sets the view according to if music is playing.
@@ -255,6 +262,9 @@ public class MusicPlayerView extends javax.swing.JFrame {
                     //((SongView)SongPanel.getComponent(currentSongIndex)).softSelect(true);
                     setPlayingView(mpModel.isPlaying());
                 }
+                if(advanceSpeed!=0){
+                    mpModel.moveSong(advanceSpeed);
+                }
                 double cur_ms = mpModel.getCurrentSong().getElapsedTime() * 1000;
                 double tot_ms = mpModel.getCurrentSong().getLength()*1000;
                 songTimeBar.setMaximum((int) (tot_ms));
@@ -291,6 +301,7 @@ public class MusicPlayerView extends javax.swing.JFrame {
         
         //this.currentSongIndex = -1;
         jScrollPane1.getVerticalScrollBar().setUnitIncrement(45);
+        this.advanceSpeed=0;
 
     }
 
@@ -403,7 +414,6 @@ public class MusicPlayerView extends javax.swing.JFrame {
         BtStop = new javax.swing.JButton();
         BtNext = new javax.swing.JButton();
         BtBack = new javax.swing.JButton();
-        songTimeBar = new javax.swing.JProgressBar();
         jScrollPane1 = new javax.swing.JScrollPane();
         SongPanel = new javax.swing.JPanel();
         SongTimeLabel = new javax.swing.JLabel();
@@ -419,6 +429,7 @@ public class MusicPlayerView extends javax.swing.JFrame {
         BtLoadSongList = new javax.swing.JButton();
         AllSongsInfoLab = new javax.swing.JLabel();
         BtRemove = new javax.swing.JButton();
+        songTimeBar = new javax.swing.JSlider();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DO_NOTHING_ON_CLOSE);
         setTitle("Music Player");
@@ -427,9 +438,12 @@ public class MusicPlayerView extends javax.swing.JFrame {
 
         BtBackward.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Media/backward_button.png"))); // NOI18N
         BtBackward.setToolTipText("Rebobinar");
-        BtBackward.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtBackwardActionPerformed(evt);
+        BtBackward.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                BtBackwardMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                BtBackwardMouseReleased(evt);
             }
         });
 
@@ -443,9 +457,12 @@ public class MusicPlayerView extends javax.swing.JFrame {
 
         BtForward.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Media/forward_button.png"))); // NOI18N
         BtForward.setToolTipText("Avanzar");
-        BtForward.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                BtForwardActionPerformed(evt);
+        BtForward.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                BtForwardMousePressed(evt);
+            }
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                BtForwardMouseReleased(evt);
             }
         });
 
@@ -470,13 +487,6 @@ public class MusicPlayerView extends javax.swing.JFrame {
         BtBack.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 BtBackActionPerformed(evt);
-            }
-        });
-
-        songTimeBar.setPreferredSize(new java.awt.Dimension(780, 14));
-        songTimeBar.addChangeListener(new javax.swing.event.ChangeListener() {
-            public void stateChanged(javax.swing.event.ChangeEvent evt) {
-                songTimeBarStateChanged(evt);
             }
         });
 
@@ -583,6 +593,13 @@ public class MusicPlayerView extends javax.swing.JFrame {
             }
         });
 
+        songTimeBar.setValue(0);
+        songTimeBar.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                songTimeBarStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -618,7 +635,7 @@ public class MusicPlayerView extends javax.swing.JFrame {
                                 .addComponent(BtNext, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(70, 70, 70)
                                 .addComponent(BtStop, javax.swing.GroupLayout.PREFERRED_SIZE, 44, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 73, Short.MAX_VALUE)
                                 .addComponent(BtRemove, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -645,23 +662,23 @@ public class MusicPlayerView extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(songTimeBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 12, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 375, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(SongTimeLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(songTimeBar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(SongTimeLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(AllSongsInfoLab))
-                            .addComponent(BtRandomStar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(BtRandom, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(BtRepeat, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(BtOnce, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(BtSequential, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                        .addComponent(AllSongsInfoLab))
+                    .addComponent(BtRandomStar, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtRandom, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtRepeat, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtOnce, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(BtSequential, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(BtAddSong, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(BtAddFolder, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -670,27 +687,20 @@ public class MusicPlayerView extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(BtLoadSongList, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(BtSaveSongList, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                .addComponent(BtBackward, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(BtPlayPause, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(BtForward, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(BtStop, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(BtNext, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addComponent(BtBack, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(BtSettings, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(BtBackward, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(BtPlayPause, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(BtForward, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(BtStop, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(BtNext, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(BtBack, javax.swing.GroupLayout.PREFERRED_SIZE, 41, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(BtSettings, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
-
-    private void BtBackwardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtBackwardActionPerformed
-        mpModel.backward();
-    }//GEN-LAST:event_BtBackwardActionPerformed
 
     private void BtPlayPauseActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtPlayPauseActionPerformed
         if(playing){
@@ -708,10 +718,6 @@ public class MusicPlayerView extends javax.swing.JFrame {
             scrollToSelection();
         }
     }//GEN-LAST:event_BtPlayPauseActionPerformed
-
-    private void BtForwardActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtForwardActionPerformed
-        mpModel.fastForward();
-    }//GEN-LAST:event_BtForwardActionPerformed
 
     private void BtStopActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BtStopActionPerformed
         mpModel.stop();
@@ -923,30 +929,25 @@ public class MusicPlayerView extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_BtRemoveActionPerformed
 
+    private void BtBackwardMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtBackwardMousePressed
+        this.advanceSpeed=-8*speedConstant;
+    }//GEN-LAST:event_BtBackwardMousePressed
+
+    private void BtBackwardMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtBackwardMouseReleased
+        this.advanceSpeed=0;
+    }//GEN-LAST:event_BtBackwardMouseReleased
+
+    private void BtForwardMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtForwardMousePressed
+        this.advanceSpeed=8*speedConstant;
+    }//GEN-LAST:event_BtForwardMousePressed
+
+    private void BtForwardMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_BtForwardMouseReleased
+        this.advanceSpeed=0;
+    }//GEN-LAST:event_BtForwardMouseReleased
+
     private void songTimeBarStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_songTimeBarStateChanged
-        double frac = ((double)songTimeBar.getValue())/((double)songTimeBar.getMaximum());
-        songTimeBar.setStringPainted(true);
-        songTimeBar.setString("");
-        songTimeBar.setSize(songTimeBar.getPreferredSize());
-        if(frac < 0.25){
-            //songTimeBar.setForeground(Color.RED);
-            //songTimeBar.setForeground(new Color(0xFA5858));
-            songTimeBar.setForeground(new Color(0xF5A9A9));
-        }
-        else if(frac < 0.5){
-            //songTimeBar.setForeground(Color.YELLOW);
-            //songTimeBar.setForeground(new Color(0xF4FA58));
-            songTimeBar.setForeground(new Color(0xF2F5A9));
-        }
-        else if(frac < 0.75){
-            //songTimeBar.setForeground(Color.GREEN);
-            //songTimeBar.setForeground(new Color(0x58FA82));
-            songTimeBar.setForeground(new Color(0xA9F5A9));
-        }
-        else{
-            //songTimeBar.setForeground(Color.BLUE);
-            //songTimeBar.setForeground(new Color(0x58ACFA));
-            songTimeBar.setForeground(new Color(0xA9F5F2));
+        if(Math.abs(songTimeBar.getValue()-mpModel.getCurrentSong().getElapsedTime()*1000)>=speedConstant){
+            mpModel.seek(songTimeBar.getValue());
         }
     }//GEN-LAST:event_songTimeBarStateChanged
 
@@ -974,7 +975,7 @@ public class MusicPlayerView extends javax.swing.JFrame {
     private javax.swing.JPanel SongPanel;
     private javax.swing.JLabel SongTimeLabel;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JProgressBar songTimeBar;
+    private javax.swing.JSlider songTimeBar;
     // End of variables declaration//GEN-END:variables
 
 

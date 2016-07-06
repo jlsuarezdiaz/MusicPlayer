@@ -28,10 +28,10 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Group type="102" attributes="0">
+          <Group type="102" alignment="0" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="songTimeBar" alignment="0" max="32767" attributes="0"/>
+                  <Component id="songTimeBar" max="32767" attributes="0"/>
                   <Component id="jScrollPane1" alignment="1" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -61,7 +61,7 @@
                               <Component id="BtNext" min="-2" pref="40" max="-2" attributes="0"/>
                               <EmptySpace min="-2" pref="70" max="-2" attributes="0"/>
                               <Component id="BtStop" min="-2" pref="44" max="-2" attributes="0"/>
-                              <EmptySpace max="32767" attributes="0"/>
+                              <EmptySpace pref="73" max="32767" attributes="0"/>
                               <Component id="BtRemove" min="-2" pref="32" max="-2" attributes="0"/>
                               <EmptySpace max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
@@ -101,25 +101,25 @@
       <Group type="103" groupAlignment="0" attributes="0">
           <Group type="102" alignment="1" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
-              <Group type="103" groupAlignment="1" attributes="0">
-                  <Group type="102" attributes="0">
-                      <Component id="jScrollPane1" min="-2" pref="375" max="-2" attributes="0"/>
+              <Component id="jScrollPane1" min="-2" pref="375" max="-2" attributes="0"/>
+              <EmptySpace type="unrelated" max="-2" attributes="0"/>
+              <Component id="songTimeBar" min="-2" max="-2" attributes="0"/>
+              <EmptySpace pref="12" max="32767" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="0" attributes="0">
+                      <Component id="SongTimeLabel" min="-2" max="-2" attributes="0"/>
                       <EmptySpace max="-2" attributes="0"/>
-                      <Component id="songTimeBar" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="102" attributes="0">
-                              <Component id="SongTimeLabel" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace max="-2" attributes="0"/>
-                              <Component id="AllSongsInfoLab" min="-2" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="BtRandomStar" alignment="0" min="-2" pref="32" max="-2" attributes="0"/>
-                          <Component id="BtRandom" min="-2" pref="32" max="-2" attributes="0"/>
-                          <Component id="BtRepeat" min="-2" pref="32" max="-2" attributes="0"/>
-                          <Component id="BtOnce" min="-2" pref="32" max="-2" attributes="0"/>
-                          <Component id="BtSequential" min="-2" pref="32" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace pref="23" max="32767" attributes="0"/>
+                      <Component id="AllSongsInfoLab" min="-2" max="-2" attributes="0"/>
+                  </Group>
+                  <Component id="BtRandomStar" alignment="0" min="-2" pref="32" max="-2" attributes="0"/>
+                  <Component id="BtRandom" min="-2" pref="32" max="-2" attributes="0"/>
+                  <Component id="BtRepeat" min="-2" pref="32" max="-2" attributes="0"/>
+                  <Component id="BtOnce" min="-2" pref="32" max="-2" attributes="0"/>
+                  <Component id="BtSequential" min="-2" pref="32" max="-2" attributes="0"/>
+              </Group>
+              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Group type="103" groupAlignment="0" attributes="0">
+                  <Group type="102" alignment="1" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Component id="BtAddSong" min="-2" pref="32" max="-2" attributes="0"/>
                           <Component id="BtAddFolder" alignment="0" min="-2" pref="32" max="-2" attributes="0"/>
@@ -131,20 +131,15 @@
                           <Component id="BtSaveSongList" alignment="0" min="-2" pref="32" max="-2" attributes="0"/>
                       </Group>
                   </Group>
-                  <Group type="102" attributes="0">
-                      <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
-                      <Group type="103" groupAlignment="0" attributes="0">
-                          <Group type="103" alignment="1" groupAlignment="0" attributes="0">
-                              <Component id="BtBackward" alignment="0" min="-2" pref="41" max="-2" attributes="0"/>
-                              <Component id="BtPlayPause" alignment="0" min="-2" pref="41" max="-2" attributes="0"/>
-                              <Component id="BtForward" alignment="0" min="-2" pref="41" max="-2" attributes="0"/>
-                              <Component id="BtStop" alignment="0" min="-2" pref="41" max="-2" attributes="0"/>
-                              <Component id="BtNext" min="-2" pref="41" max="-2" attributes="0"/>
-                              <Component id="BtBack" min="-2" pref="41" max="-2" attributes="0"/>
-                          </Group>
-                          <Component id="BtSettings" alignment="1" min="-2" max="-2" attributes="0"/>
-                      </Group>
+                  <Group type="103" alignment="1" groupAlignment="0" attributes="0">
+                      <Component id="BtBackward" alignment="0" min="-2" pref="41" max="-2" attributes="0"/>
+                      <Component id="BtPlayPause" alignment="0" min="-2" pref="41" max="-2" attributes="0"/>
+                      <Component id="BtForward" alignment="0" min="-2" pref="41" max="-2" attributes="0"/>
+                      <Component id="BtStop" alignment="0" min="-2" pref="41" max="-2" attributes="0"/>
+                      <Component id="BtNext" min="-2" pref="41" max="-2" attributes="0"/>
+                      <Component id="BtBack" min="-2" pref="41" max="-2" attributes="0"/>
                   </Group>
+                  <Component id="BtSettings" alignment="1" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -160,7 +155,8 @@
         <Property name="toolTipText" type="java.lang.String" value="Rebobinar"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtBackwardActionPerformed"/>
+        <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="BtBackwardMousePressed"/>
+        <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="BtBackwardMouseReleased"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="BtPlayPause">
@@ -182,7 +178,8 @@
         <Property name="toolTipText" type="java.lang.String" value="Avanzar"/>
       </Properties>
       <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtForwardActionPerformed"/>
+        <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="BtForwardMousePressed"/>
+        <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="BtForwardMouseReleased"/>
       </Events>
     </Component>
     <Component class="javax.swing.JButton" name="BtStop">
@@ -216,16 +213,6 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtBackActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JProgressBar" name="songTimeBar">
-      <Properties>
-        <Property name="preferredSize" type="java.awt.Dimension" editor="org.netbeans.beaninfo.editors.DimensionEditor">
-          <Dimension value="[780, 14]"/>
-        </Property>
-      </Properties>
-      <Events>
-        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="songTimeBarStateChanged"/>
       </Events>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane1">
@@ -395,6 +382,14 @@
       </Properties>
       <Events>
         <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="BtRemoveActionPerformed"/>
+      </Events>
+    </Component>
+    <Component class="javax.swing.JSlider" name="songTimeBar">
+      <Properties>
+        <Property name="value" type="int" value="0"/>
+      </Properties>
+      <Events>
+        <EventHandler event="stateChanged" listener="javax.swing.event.ChangeListener" parameters="javax.swing.event.ChangeEvent" handler="songTimeBarStateChanged"/>
       </Events>
     </Component>
   </SubComponents>
