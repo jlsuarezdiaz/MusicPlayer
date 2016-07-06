@@ -17,6 +17,7 @@ import java.util.NoSuchElementException;
 import java.util.Random;
 import java.util.Scanner;
 import javafx.scene.media.MediaException;
+import javafx.util.Duration;
 import javax.swing.JOptionPane;
 
 /**
@@ -227,6 +228,26 @@ public class MusicPlayer {
         if(!isEmpty()){
             currentSong.stop();
             playing = false;
+        }
+    }
+    
+    /**
+     * Seeks song to a specified time.
+     * @param time Time to seek into (ms)
+     */
+    public void seek(double time){
+        if(!isEmpty() && currentSong!=null){
+            currentSong.seek(time);
+        }
+    }
+    
+    /**
+     * Moves the song the time specified by \e time.
+     * @param time Time to move (in ms). A negative value means rewind. 
+     */
+    public void moveSong(double time){
+        if(!isEmpty()){
+            currentSong.moveSong(time);
         }
     }
     

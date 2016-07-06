@@ -528,6 +528,24 @@ public class Song {
         player.stop();
         player.play();
     }
+    
+    /**
+     * Seek.
+     * @param time Time to seek into (in ms)
+     */
+    public void seek(double time){
+        Duration d = Duration.millis(time);
+        if(player!=null) player.seek(d);
+    }
+    
+    /**
+     * Moves the song the time specified by \e time.
+     * @param time Time to move (in ms). A negative value means rewind. 
+     */
+    public void moveSong(double time){
+        player.seek(Duration.millis(this.getElapsedTime()*1000+time));
+    }
+    
     /**
      * Fast forward.
      */
