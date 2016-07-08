@@ -946,7 +946,7 @@ public class MusicPlayerView extends javax.swing.JFrame {
     }//GEN-LAST:event_BtForwardMouseReleased
 
     private void songTimeBarStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_songTimeBarStateChanged
-        if(Math.abs(songTimeBar.getValue()-mpModel.getCurrentSong().getElapsedTime()*1000)>=speedConstant){
+        if(!mpModel.isEmpty() && Math.abs(songTimeBar.getValue()-mpModel.getCurrentSong().getElapsedTime()*1000)>=speedConstant){
             mpModel.seek(songTimeBar.getValue());
         }
         /*
