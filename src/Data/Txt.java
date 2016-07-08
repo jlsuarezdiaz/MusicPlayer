@@ -57,7 +57,7 @@ public class Txt {
     /**
      * Edition's string.
      */
-    public static final String EDITION = "Music PlayerJava Edition";
+    public static final String EDITION = "Music Player Java Edition";
     
     /**
      * String with program info.
