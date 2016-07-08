@@ -22,18 +22,21 @@ public class Txt {
             "Versión 1.1 (3/8/2015):"+
             "\n- Solucionados problemas de codificación."+
             "\n- Selección y borrado de canciones."+
-            "\n- Control de errores de reproducción.\n\n"
+            "\n- Control de errores de reproducción.\n\n"+
+            "Versión 1.2 (5/8/2015):"+
+            "\n- Scrolling mejorado."+
+            "\n- Añadida selección múltiple de canciones."+
+            "\n- Algunos bugs solucionados."+
+            "\n- Barra de tiempo coloreada.\n\n"
             ;
     
     /**
      * String with info about last version.
      */
     public static final String LAST_VERSION_INFO =
-            "Versión 1.2 (5/8/2015):"+
-            "\n- Scrolling mejorado."+
-            "\n- Añadida selección múltiple de canciones."+
-            "\n- Algunos bugs solucionados."+
-            "\n- Barra de tiempo coloreada."
+            "Versión 1.3 (5/8/2015):"+
+            "\n- Añadida la funcionalidad de avance rápido y rebobinado."+
+            "\n- Añadido desplazamiento a lo largo de la canción.\n\n"
     ;
     
     /**
@@ -44,7 +47,7 @@ public class Txt {
     /**
      * Version's string.
      */
-    public static final String VERSION = "v1.1";
+    public static final String VERSION = "v1.3";
     
     /**
      * Copyright's string.
