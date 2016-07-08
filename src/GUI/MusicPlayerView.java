@@ -949,6 +949,26 @@ public class MusicPlayerView extends javax.swing.JFrame {
         if(Math.abs(songTimeBar.getValue()-mpModel.getCurrentSong().getElapsedTime()*1000)>=speedConstant){
             mpModel.seek(songTimeBar.getValue());
         }
+        /*
+        double frac = ((double)songTimeBar.getValue())/((double)songTimeBar.getMaximum());
+        
+        //songTimeBar.setSize(songTimeBar.getPreferredSize());
+        if(frac < 0.25){
+            //Color.RED   //new Color(0xFA5858)
+            songTimeBar.setForeground(new Color(0xF5A9A9));
+        }
+        else if(frac < 0.5){
+            //Color.YELLOW  //songTimeBar.setForeground(new Color(0xF4FA58)           
+            songTimeBar.setForeground(new Color(0xF2F5A9));
+        }
+        else if(frac < 0.75){
+            //Color.GREEN   //new Color(0x58FA82)
+            songTimeBar.setForeground(new Color(0xA9F5A9));
+        }
+        else{
+            //Color.BLUE //new Color(0x58ACFA)
+            songTimeBar.setForeground(new Color(0xA9F5F2));
+        }*/
     }//GEN-LAST:event_songTimeBarStateChanged
 
 
