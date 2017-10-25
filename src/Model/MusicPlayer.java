@@ -84,6 +84,8 @@ public class MusicPlayer {
     
     private String defaultPlaylistPath;
     
+    private volatile boolean bar_lock;
+    
     private static final String IO_LIM = "\0";
     
     // ---------- PRIVATE METHODS ---------- //
@@ -121,6 +123,7 @@ public class MusicPlayer {
         playTime = 0;
         
         defaultPlaylistPath = "";
+        bar_lock = false;
     }
     
     // ---------- SETTERS & GETTERS ---------- //
@@ -269,10 +272,23 @@ public class MusicPlayer {
         }
     }
     
+    public boolean barLock(){
+        return bar_lock;
+    }
+    
+    private synchronized void lockBar(){
+        bar_lock = true;
+    }
+    
+    public synchronized void unlockBar(){
+        bar_lock = false;
+    }
+    
     /**
      * Next song.
      */
     public void next() throws MediaException{
+        lockBar();
         if(!isEmpty()){
             if(currentSong != null) currentSong.stop();
             if(historyPos < history.size() - 1){
@@ -336,6 +352,7 @@ public class MusicPlayer {
      * Goes back to previous song.
      */
     public void back() throws MediaException{
+       lockBar();
         if(!isEmpty()){
             currentSong.stop();
             if(historyPos <= 1 && playing){
@@ -348,6 +365,7 @@ public class MusicPlayer {
                 if(playing) currentSong.play();
             }
         }
+        
     }
     
     /**

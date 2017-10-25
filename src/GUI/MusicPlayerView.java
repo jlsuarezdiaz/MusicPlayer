@@ -276,6 +276,9 @@ public class MusicPlayerView extends javax.swing.JFrame {
                 //SongTimeLabel.setText(cur.toString() + " / " + tot.toString() + " ");
                 //System.out.println(mpModel.getCurrentSong().getElapsedTime()*1000);
                 //System.out.println(mpModel.getCurrentSong().getRate());
+                if(mpModel.barLock()){
+                    mpModel.unlockBar();
+                }
             }
             else{
                 songTimeBar.setMaximum(1);
@@ -945,8 +948,9 @@ public class MusicPlayerView extends javax.swing.JFrame {
         this.advanceSpeed=0;
     }//GEN-LAST:event_BtForwardMouseReleased
 
+    
     private void songTimeBarStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_songTimeBarStateChanged
-        if(!mpModel.isEmpty() && Math.abs(songTimeBar.getValue()-mpModel.getCurrentSong().getElapsedTime()*1000)>=speedConstant){
+        if(!mpModel.isEmpty() && Math.abs(songTimeBar.getValue()-mpModel.getCurrentSong().getElapsedTime()*1000)>=speedConstant && !mpModel.barLock()){
             mpModel.seek(songTimeBar.getValue());
         }
         /*
